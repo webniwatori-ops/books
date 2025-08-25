@@ -39,25 +39,45 @@ def index():
     books = c.fetchall()
     conn.close()
     
-    html = """
-    <h1>吹奏楽部-楽譜一覧-</h1>
+html = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>楽譜データベース</title>
+    <style>
+        body {
+            background-color: #f0f8ff;  /* ここで好きな色に変更 */
+            font-family: Arial, sans-serif;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>楽譜データベース</h1>
     <form method="get">
-      <input type="text" name="q" placeholder="タイトル/作曲者/楽器で検索" value="{{ request.args.get('q','') }}">
-      <input type="submit" value="検索">
+        <input type="text" name="q" placeholder="タイトル/作曲者/楽器で検索" value="{{ request.args.get('q','') }}">
+        <input type="submit" value="検索">
     </form>
     <a href="/add">新しい楽譜を追加</a> | 
     <a href="/upload">CSV一括登録</a>
     <table border="1" style="margin-top:10px;">
-      <tr><th>ID</th><th>タイトル</th><th>作曲者</th><th>ジャンル</th><th>楽器</th><th>棚</th><th>備考</th></tr>
-      {% for b in books %}
-      <tr>
-        <td>{{ b[0] }}</td><td>{{ b[1] }}</td><td>{{ b[2] }}</td>
-        <td>{{ b[3] }}</td><td>{{ b[4] }}</td><td>{{ b[5] }}</td><td>{{ b[6] }}</td>
-      </tr>
-      {% endfor %}
+        <tr><th>ID</th><th>タイトル</th><th>作曲者</th><th>ジャンル</th><th>楽器</th><th>棚</th><th>備考</th></tr>
+        {% for b in books %}
+        <tr>
+            <td>{{ b[0] }}</td><td>{{ b[1] }}</td><td>{{ b[2] }}</td>
+            <td>{{ b[3] }}</td><td>{{ b[4] }}</td><td>{{ b[5] }}</td><td>{{ b[6] }}</td>
+        </tr>
+        {% endfor %}
     </table>
-    """
-    return render_template_string(html, books=books, request=request)
+</body>
+</html>
+"""
+return render_template_string(html, books=books, request=request)
 
 # 個別追加画面
 @app.route("/add", methods=["GET", "POST"])
