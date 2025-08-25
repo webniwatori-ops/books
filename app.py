@@ -39,45 +39,39 @@ def index():
     books = c.fetchall()
     conn.close()
     
-html = """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>楽譜データベース</title>
-    <style>
-        body {
-            background-color: #87cefa;  /* ここで好きな色に変更 */
-            font-family: Arial, sans-serif;
-        }
-        table {
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 5px 10px;
-        }
-    </style>
-</head>
-<body>
-    <h1>楽譜データベース</h1>
-    <form method="get">
-        <input type="text" name="q" placeholder="タイトル/作曲者/楽器で検索" value="{{ request.args.get('q','') }}">
-        <input type="submit" value="検索">
-    </form>
-    <a href="/add">新しい楽譜を追加</a> | 
-    <a href="/upload">CSV一括登録</a>
-    <table border="1" style="margin-top:10px;">
-        <tr><th>ID</th><th>タイトル</th><th>作曲者</th><th>ジャンル</th><th>楽器</th><th>棚</th><th>備考</th></tr>
-        {% for b in books %}
-        <tr>
-            <td>{{ b[0] }}</td><td>{{ b[1] }}</td><td>{{ b[2] }}</td>
-            <td>{{ b[3] }}</td><td>{{ b[4] }}</td><td>{{ b[5] }}</td><td>{{ b[6] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
-"""
-return render_template_string(html, books=books, request=request)
+    html = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>楽譜データベース</title>
+        <style>
+            body { background-color: #87cefa; font-family: Arial, sans-serif; }
+            table { border-collapse: collapse; width: 100%; }
+            th, td { padding: 5px 10px; border: 1px solid #000; text-align: left; }
+            a { margin-right: 10px; }
+        </style>
+    </head>
+    <body>
+        <h1>楽譜データベース</h1>
+        <form method="get">
+            <input type="text" name="q" placeholder="タイトル/作曲者/楽器で検索" value="{{ request.args.get('q','') }}">
+            <input type="submit" value="検索">
+        </form>
+        <a href="/add">新しい楽譜を追加</a>
+        <a href="/upload">CSV一括登録</a>
+        <table style="margin-top:10px;">
+            <tr><th>ID</th><th>タイトル</th><th>作曲者</th><th>ジャンル</th><th>楽器</th><th>棚</th><th>備考</th></tr>
+            {% for b in books %}
+            <tr>
+                <td>{{ b[0] }}</td><td>{{ b[1] }}</td><td>{{ b[2] }}</td>
+                <td>{{ b[3] }}</td><td>{{ b[4] }}</td><td>{{ b[5] }}</td><td>{{ b[6] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+    </html>
+    """
+    return render_template_string(html, books=books, request=request)
 
 # 個別追加画面
 @app.route("/add", methods=["GET", "POST"])
@@ -108,20 +102,32 @@ def add():
         return redirect("/")
 
     html = """
-    <h1>楽譜を追加</h1>
-    <form method="post">
-      タイトル: <input type="text" name="title"><br>
-      作曲者: <input type="text" name="composer"><br>
-      ジャンル: <input type="text" name="genre"><br>
-      楽器:<br>
-      {% for inst in instruments_list %}
-      <input type="checkbox" name="instrument" value="{{ inst }}"> {{ inst }}<br>
-      {% endfor %}
-      棚の場所: <input type="text" name="shelf"><br>
-      備考: <input type="text" name="notes"><br>
-      <input type="submit" value="追加">
-    </form>
-    <a href="/">戻る</a>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>楽譜追加</title>
+        <style>
+            body { background-color: #87cefa; font-family: Arial, sans-serif; }
+            input[type=text], input[type=file] { margin-bottom: 5px; }
+        </style>
+    </head>
+    <body>
+        <h1>楽譜を追加</h1>
+        <form method="post">
+            タイトル: <input type="text" name="title"><br>
+            作曲者: <input type="text" name="composer"><br>
+            ジャンル: <input type="text" name="genre"><br>
+            楽器:<br>
+            {% for inst in instruments_list %}
+            <input type="checkbox" name="instrument" value="{{ inst }}"> {{ inst }}<br>
+            {% endfor %}
+            棚の場所: <input type="text" name="shelf"><br>
+            備考: <input type="text" name="notes"><br>
+            <input type="submit" value="追加">
+        </form>
+        <a href="/">戻る</a>
+    </body>
+    </html>
     """
     return render_template_string(html, instruments_list=instruments_list)
 
@@ -145,12 +151,24 @@ def upload():
         return redirect("/")
     
     html = """
-    <h1>CSV一括登録</h1>
-    <form method="post" enctype="multipart/form-data">
-      CSVファイルを選択: <input type="file" name="file"><br>
-      <input type="submit" value="アップロード">
-    </form>
-    <a href="/">戻る</a>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>CSVアップロード</title>
+        <style>
+            body { background-color: #87cefa; font-family: Arial, sans-serif; }
+            input[type=file] { margin-bottom: 5px; }
+        </style>
+    </head>
+    <body>
+        <h1>CSV一括登録</h1>
+        <form method="post" enctype="multipart/form-data">
+            CSVファイルを選択: <input type="file" name="file"><br>
+            <input type="submit" value="アップロード">
+        </form>
+        <a href="/">戻る</a>
+    </body>
+    </html>
     """
     return render_template_string(html)
 
