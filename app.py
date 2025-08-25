@@ -40,7 +40,7 @@ def index():
     conn.close()
     
     html = """
-    <h1>楽譜データベース</h1>
+    <h1>吹奏楽部-楽譜一覧-</h1>
     <form method="get">
       <input type="text" name="q" placeholder="タイトル/作曲者/楽器で検索" value="{{ request.args.get('q','') }}">
       <input type="submit" value="検索">
