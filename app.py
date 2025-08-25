@@ -46,7 +46,7 @@ html = """
     <title>楽譜データベース</title>
     <style>
         body {
-            background-color: #f0f8ff;  /* ここで好きな色に変更 */
+            background-color: #87cefa;  /* ここで好きな色に変更 */
             font-family: Arial, sans-serif;
         }
         table {
