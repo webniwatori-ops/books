@@ -60,7 +60,7 @@ def index():
         <a href="/add">新しい楽譜を追加</a>
         <a href="/upload">CSV一括登録</a>
         <table style="margin-top:10px;">
-            <tr><th>ID</th><th>タイトル</th><th>作曲者</th><th>ジャンル</th><th>楽器</th><th>棚</th><th>備考</th></tr>
+            <tr><th>ID</th><th>タイトル</th><th>作曲者</th><th>ジャンル</th><th>楽器</th><th>番号</th><th>備考</th></tr>
             {% for b in books %}
             <tr>
                 <td>{{ b[0] }}</td><td>{{ b[1] }}</td><td>{{ b[2] }}</td>
@@ -121,7 +121,7 @@ def add():
             {% for inst in instruments_list %}
             <input type="checkbox" name="instrument" value="{{ inst }}"> {{ inst }}<br>
             {% endfor %}
-            棚の場所: <input type="text" name="shelf"><br>
+            番号: <input type="text" name="shelf"><br>
             備考: <input type="text" name="notes"><br>
             <input type="submit" value="追加">
         </form>
@@ -145,7 +145,7 @@ def upload():
         c = conn.cursor()
         for row in reader:
             c.execute("INSERT INTO books (title, composer, genre, instrument, shelf, notes) VALUES (?, ?, ?, ?, ?, ?)",
-                      (row["タイトル"], row["作曲者"], row["ジャンル"], row["楽器"], row["棚"], row["備考"]))
+                      (row["タイトル"], row["作曲者"], row["ジャンル"], row["楽器"], row["番号"], row["備考"]))
         conn.commit()
         conn.close()
         return redirect("/")
