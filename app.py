@@ -43,7 +43,7 @@ def index():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>楽譜データベース</title>
+        <title>吹奏楽部-楽譜一覧-</title>
         <style>
             body { background-color: #87cefa; font-family: Arial, sans-serif; }
             table { border-collapse: collapse; width: 100%; }
@@ -52,7 +52,7 @@ def index():
         </style>
     </head>
     <body>
-        <h1>楽譜データベース</h1>
+        <h1>吹奏楽部-楽譜一覧-</h1>
         <form method="get">
             <input type="text" name="q" placeholder="タイトル/作曲者/楽器で検索" value="{{ request.args.get('q','') }}">
             <input type="submit" value="検索">
