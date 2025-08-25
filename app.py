@@ -45,7 +45,7 @@ def index():
     <head>
         <title>吹奏楽部-楽譜一覧-</title>
         <style>
-            body { background-color: #87ceeb; font-family: Arial, sans-serif; }
+            body { background-color: #add8e6; font-family: Arial, sans-serif; }
             table { border-collapse: collapse; width: 100%; }
             th, td { padding: 5px 10px; border: 1px solid #000; text-align: left; }
             a { margin-right: 10px; }
